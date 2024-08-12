@@ -1,0 +1,81 @@
+:root {
+  --dark-mode-elements: hsl(209, 23%, 22%);
+  --dark-mode-background: hsl(207, 26%, 17%);
+  --dark-mode-text: hsl(0, 0%, 100%);
+  --light-mode-text: hsl(200, 15%, 8%);
+  --light-mode-input: hsl(0, 0%, 52%);
+  --light-mode-background: hsl(0, 0%, 98%);
+  --light-mode-elements: hsl(0, 0%, 100%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nunito Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-size: 20px;
+}
+
+body {
+  background: var(--light-mode-background);
+  color: var(--light-mode-text);
+}
+
+.light-elements {
+  background: var(--light-mode-elements);
+}
+
+input {
+  width: 100%;
+  border: none;
+}
+
+input:focus {
+  outline: none;
+  border: none;
+}
+
+select {
+  width: 100%;
+  border: none;
+  outline: none;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  aspect-ratio: 1.154;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  position: relative;
+}
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: -150% -100% -50%;
+  background: repeating-conic-gradient(
+    from 30deg,
+    #ffabab 0 60deg,
+    #abe4ff 0 120deg,
+    #ff7373 0 180deg
+  );
+  animation: l9 2s infinite;
+}
+@keyframes l9 {
+  0% {
+    transform: rotate(0);
+  }
+  23%,
+  33% {
+    transform: rotate(60deg);
+  }
+  56%,
+  66% {
+    transform: rotate(120deg);
+  }
+  90%,
+  100% {
+    transform: rotate(180deg);
+  }
+}
