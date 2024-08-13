@@ -34,6 +34,7 @@ let renderCards = (countryDetails) => {
     let image = document.createElement("img");
     image.className = "card-img-top";
     image.setAttribute("src", country.flags.png);
+    image.style.height = "12rem";
 
     let cardBody = document.createElement("div");
     cardBody.className = "card-body";
@@ -72,7 +73,6 @@ let filteredData = () => {
       country.name.common.toLowerCase().includes(searchCountry.toLowerCase())
     );
 
-    console.log(filterDataByCountry);
     renderCards(filterDataByCountry);
 
     return;
@@ -99,4 +99,43 @@ searchBox.addEventListener("keyup", (e) => {
 selectedFilter.addEventListener("change", (e) => {
   filteredRegion = e.target.value;
   filteredData();
+});
+
+let toggleMode = document.querySelector(".mode");
+
+toggleMode.addEventListener("click", () => {
+  console.log("clicked!");
+
+  let body = document.querySelector("body");
+  let lightEle = document.querySelectorAll(".light-elements");
+  let select = document.querySelector("select");
+  let card = document.querySelectorAll(".card");
+  let input = document.querySelector("input");
+
+  if (body.classList.contains("dark-mode")) {
+    lightEle.forEach((item) => {
+      item.classList.remove("dark-elements");
+    });
+    body.classList.remove("dark-mode");
+    select.classList.remove("dark-mode");
+    card.forEach((item) => {
+      item.classList.remove("dark-elements");
+      item.classList.remove("dark-text");
+    });
+
+    input.classList.remove("dark-elements");
+    input.classList.remove("dark-text");
+  } else {
+    lightEle.forEach((item) => {
+      item.classList.add("dark-elements");
+    });
+    body.classList.add("dark-mode");
+    select.classList.add("dark-mode");
+    card.forEach((item) => {
+      item.classList.add("dark-elements");
+      item.classList.add("dark-text");
+    });
+    input.classList.add("dark-elements");
+    input.classList.add("dark-text");
+  }
 });

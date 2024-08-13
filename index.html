@@ -20,7 +20,30 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" />
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" />
+    <style>
+        .mode:hover {
+            cursor: pointer;
+        }
+
+
+
+        @media (min-width: 1100px) {
+
+            /* CSS rules */
+            * {
+                font-size: 20px;
+            }
+
+            .large-icon {
+                font-size: 40px !important;
+            }
+
+
+        }
+    </style>
 </head>
+
+
 
 <body>
 
@@ -28,12 +51,13 @@
 
     <div>
 
-        <div class="d-flex justify-content-between py-4 px-2 light-elements heading-con shadow">
+        <div
+            class="d-flex large-txt justify-content-between py-4 px-2 px-sm-3 px-md-5 light-elements heading-con shadow">
 
-            <div class="fw-bold">Where in the world</div>
-            <div class="fw-normal d-flex align-items-center">
+            <div class="fw-bold ">Where in the world</div>
+            <div class="fw-normal d-flex align-items-center mode">
 
-                <span class="material-symbols-outlined">
+                <span class="material-symbols-outlined large-icon">
                     dark_mode
                 </span>
                 Dark mode
@@ -44,19 +68,19 @@
 
         </div>
 
-        <div class="px-4 py-4 ">
+        <div class="px-4 py-4 mt-md-4 fs-1">
 
-            <div class="row d-flex flex-column gap-3">
+            <div class="row d-flex flex-column flex-md-row justify-content-md-between  gap-3 px-md-5">
 
-                <div class="col-12 shadow rounded-4 d-flex align-items-center light-elements py-2 px-4">
-                    <span class="material-symbols-outlined me-3">
+                <div class="col-12 col-md-6 shadow rounded-2 d-flex align-items-center light-elements py-2 px-4 ">
+                    <span class="material-symbols-outlined me-3 large-icon">
                         search
                     </span>
                     <input type="text" placeholder="Search for a country...">
 
                 </div>
 
-                <div class="col-7 rounded-2 shadow p-0">
+                <div class="col-7 col-md-3 rounded-2 shadow p-0">
 
                     <select name="" id="" class="p-2 light-elements rounded-2">
 
@@ -76,7 +100,8 @@
 
         </div>
 
-        <div class="countries-container d-flex flex-column  p-4 gap-4 justify-content-center align-items-center">
+        <div
+            class="countries-container d-flex flex-column  p-4 gap-4 justify-content-center align-items-center flex-nowrap flex-md-wrap flex-md-row ">
         </div>
 
 

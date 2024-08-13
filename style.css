@@ -21,10 +21,24 @@
 body {
   background: var(--light-mode-background);
   color: var(--light-mode-text);
+  transition: background 2s, color 1s;
+}
+
+.dark-mode {
+  background: var(--dark-mode-background);
+  color: var(--dark-mode-text) !important;
+}
+
+.dark-text {
+  color: var(--dark-mode-text) !important;
 }
 
 .light-elements {
   background: var(--light-mode-elements);
+}
+
+.dark-elements {
+  background: var(--dark-mode-elements);
 }
 
 input {
