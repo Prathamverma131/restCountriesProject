@@ -30,7 +30,7 @@
         @media (min-width: 1100px) {
 
             /* CSS rules */
-            * {
+            #heading {
                 font-size: 20px;
             }
 
@@ -54,7 +54,7 @@
         <div
             class="d-flex large-txt justify-content-between py-4 px-2 px-sm-3 px-md-5 light-elements heading-con shadow">
 
-            <div class="fw-bold ">Where in the world</div>
+            <div id="heading" class="fw-bold">Where in the world</div>
             <div class="fw-normal d-flex align-items-center mode">
 
                 <span class="material-symbols-outlined large-icon">
@@ -68,7 +68,7 @@
 
         </div>
 
-        <div class="px-4 py-4 mt-md-4 fs-1">
+        <div class="px-4 py-4 mt-md-4">
 
             <div class="row d-flex flex-column flex-md-row justify-content-md-between  gap-3 px-md-5">
 
@@ -80,21 +80,46 @@
 
                 </div>
 
-                <div class="col-7 col-md-3 rounded-2 shadow p-0">
 
-                    <select name="" id="" class="p-2 light-elements rounded-2">
+                <div class="filter-container d-flex flex-column gap-3">
+                    <div class="col-4  rounded-2 shadow p-0">
 
-                        <option value="" selected>Filter by Region</option>
-                        <option value="africa">Africa</option>
-                        <option value="americas">America</option>
-                        <option value="asia">Asia</option>
-                        <option value="europe">Europe</option>
-                        <option value="oceania">Oceania</option>
+                        <select name="" id="" class="p-2 light-elements rounded-2">
 
-                    </select>
+                            <option value="" selected>Filter by Region</option>
+                            <option value="africa">Africa</option>
+                            <option value="americas">America</option>
+                            <option value="asia">Asia</option>
+                            <option value="europe">Europe</option>
+                            <option value="oceania">Oceania</option>
 
+                        </select>
+
+
+                    </div>
+
+                    <div class="col-4  rounded-2 shadow p-0">
+
+                        <select name="" id="" class="sub-region-filter p-2 light-elements rounded-2">
+
+                            <option value="" selected>Filter by Sub-Region</option>
+
+
+                        </select>
+
+
+                    </div>
+
+                    <div class="col-4 area-filter light-elements rounded-2 p-2 shadow">Filter by area</div>
+
+                    <div class="col-4 pop-filter light-elements rounded-2 p-2 shadow">Filter by population</div>
 
                 </div>
+
+
+
+
+
 
             </div>
 

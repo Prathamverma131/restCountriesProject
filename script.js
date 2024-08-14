@@ -3,6 +3,13 @@ let searchBox = document.querySelector("input");
 let selectedFilter = document.querySelector("select");
 let searchCountry = "";
 let filteredRegion = "";
+let filteredSubRegion = "";
+let regionsAndSubRegions = {};
+let countriesDataArray = [];
+let filteredArea = false;
+let filteredPopulation = false;
+let areaFlag = true;
+let populationFlag = true;
 
 let apiCall = async () => {
   let loaderContainer = document.createElement("div");
@@ -10,13 +17,31 @@ let apiCall = async () => {
   container.appendChild(loaderContainer);
 
   try {
-    let apiData = await fetch("https://restcountries.com/v3.1/all");
-    let countryDetails = await apiData.json();
-    localStorage.setItem("countryDetails", JSON.stringify(countryDetails));
-    renderCards(countryDetails);
+    setTimeout(async () => {
+      let apiData = await fetch("https://restcountries.com/v3.1/all");
+      let countryDetails = await apiData.json();
+      countriesDataArray = [...countryDetails];
+      localStorage.setItem("countryDetails", JSON.stringify(countryDetails));
+      mapRegionWithSubRegion(countryDetails);
+      renderCards(countryDetails);
+    }, 2000);
   } catch (e) {
     container.textContent = "OOPS! No data found";
   }
+};
+
+let mapRegionWithSubRegion = (countriesData) => {
+  countriesData.forEach((country) => {
+    let region = country.region.toLowerCase();
+    if (regionsAndSubRegions[region]) {
+      let regionSet = regionsAndSubRegions[region];
+      regionSet.add(country.subregion);
+    } else {
+      let regionSet = new Set();
+      regionSet.add(country.subregion);
+      regionsAndSubRegions[region] = regionSet;
+    }
+  });
 };
 
 let renderCards = (countryDetails) => {
@@ -55,7 +80,12 @@ let renderCards = (countryDetails) => {
 };
 
 let filteredData = () => {
-  let countryDetails = JSON.parse(localStorage.getItem("countryDetails"));
+  let countryDetails = [...countriesDataArray];
+
+  if (!searchCountry && !filteredRegion && !filteredSubRegion) {
+    localStorage.setItem("countryDetails", JSON.stringify(countryDetails));
+    renderCards(countryDetails);
+  }
 
   if (searchCountry && filteredRegion) {
     let filteredDataByRegionAndCountry = countryDetails.filter(
@@ -63,30 +93,106 @@ let filteredData = () => {
         country.region.toLowerCase() === filteredRegion &&
         country.name.common.toLowerCase().includes(searchCountry.toLowerCase())
     );
+    localStorage.setItem(
+      "countryDetails",
+      JSON.stringify(filteredDataByRegionAndCountry)
+    );
     renderCards(filteredDataByRegionAndCountry);
-
-    return;
-  }
-
-  if (searchCountry && !filteredRegion) {
+  } else if (searchCountry && !filteredRegion) {
     let filterDataByCountry = countryDetails.filter((country) =>
       country.name.common.toLowerCase().includes(searchCountry.toLowerCase())
     );
-
+    localStorage.setItem("countryDetails", JSON.stringify(filterDataByCountry));
     renderCards(filterDataByCountry);
-
-    return;
-  }
-
-  if (!searchCountry && filteredRegion) {
+  } else if (!searchCountry && filteredRegion) {
     let filteredDataByRegion = countryDetails.filter(
       (country) => country.region.toLowerCase() === filteredRegion
     );
+    localStorage.setItem(
+      "countryDetails",
+      JSON.stringify(filteredDataByRegion)
+    );
     renderCards(filteredDataByRegion);
-    return;
   }
 
-  renderCards(countryDetails);
+  if (filteredSubRegion) {
+    countryDetails = JSON.parse(localStorage.getItem("countryDetails"));
+    let filterDataBySubRegion = countryDetails.filter(
+      (country) => country.subregion === filteredSubRegion
+    );
+    localStorage.setItem(
+      "countryDetails",
+      JSON.stringify(filterDataBySubRegion)
+    );
+    renderCards(countryDetails);
+  }
+
+  if (filteredArea) {
+    countryDetails = JSON.parse(localStorage.getItem("countryDetails"));
+    if (areaFlag) {
+      countryDetails.sort((a, b) => {
+        if (a.area > b.area) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+    } else {
+      countryDetails.sort((a, b) => {
+        if (a.area > b.area) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    }
+    localStorage.setItem("countryDetails", JSON.stringify(countryDetails));
+    renderCards(countryDetails);
+  }
+
+  if (filteredPopulation) {
+    countryDetails = JSON.parse(localStorage.getItem("countryDetails"));
+    if (populationFlag) {
+      countryDetails.sort((a, b) => {
+        if (a.population > b.population) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+    } else {
+      countryDetails.sort((a, b) => {
+        if (a.population > b.population) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    }
+    localStorage.setItem("countryDetails", JSON.stringify(countryDetails));
+    renderCards(countryDetails);
+  }
+
+  // renderCards(countryDetails);
+};
+
+const renderSubRegion = (subregions) => {
+  let subRegionElement = document.querySelector(".sub-region-filter");
+
+  subregions.forEach((subregion) => {
+    if (subregion) {
+      let option = document.createElement("option");
+      option.textContent = subregion;
+      option.setAttribute("value", subregion);
+      subRegionElement.appendChild(option);
+    }
+  });
+};
+
+const setSubRegion = (region) => {
+  const subRegionSet = regionsAndSubRegions[region];
+  const subRegionArr = Array.from(subRegionSet);
+  renderSubRegion(subRegionArr);
 };
 
 apiCall();
@@ -99,13 +205,12 @@ searchBox.addEventListener("keyup", (e) => {
 selectedFilter.addEventListener("change", (e) => {
   filteredRegion = e.target.value;
   filteredData();
+  setSubRegion(filteredRegion);
 });
 
 let toggleMode = document.querySelector(".mode");
 
 toggleMode.addEventListener("click", () => {
-  console.log("clicked!");
-
   let body = document.querySelector("body");
   let lightEle = document.querySelectorAll(".light-elements");
   let select = document.querySelector("select");
@@ -138,4 +243,26 @@ toggleMode.addEventListener("click", () => {
     input.classList.add("dark-elements");
     input.classList.add("dark-text");
   }
+});
+
+let subRegionElement = document.querySelector(".sub-region-filter");
+subRegionElement.addEventListener("change", (e) => {
+  filteredSubRegion = e.target.value;
+  filteredData();
+});
+
+let areaFilter = document.querySelector(".area-filter");
+areaFilter.addEventListener("click", () => {
+  filteredArea = true;
+  filteredPopulation = false;
+  areaFlag = !areaFlag;
+  filteredData();
+});
+
+let populationFilter = document.querySelector(".pop-filter");
+populationFilter.addEventListener("click", () => {
+  filteredPopulation = true;
+  filteredArea = false;
+  populationFlag = !populationFlag;
+  filteredData();
 });
