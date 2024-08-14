@@ -64,7 +64,7 @@ select {
 
 /* HTML: <div class="loader"></div> */
 .loader {
-  width: 350px;
+  width: 100px;
   aspect-ratio: 1.154;
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
   position: relative;

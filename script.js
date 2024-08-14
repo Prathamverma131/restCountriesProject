@@ -216,6 +216,7 @@ toggleMode.addEventListener("click", () => {
   let select = document.querySelector("select");
   let card = document.querySelectorAll(".card");
   let input = document.querySelector("input");
+  let subRegionSelect = document.querySelector(".sub-region-filter");
 
   if (body.classList.contains("dark-mode")) {
     lightEle.forEach((item) => {
@@ -223,6 +224,7 @@ toggleMode.addEventListener("click", () => {
     });
     body.classList.remove("dark-mode");
     select.classList.remove("dark-mode");
+    subRegionSelect.classList.remove("dark-mode");
     card.forEach((item) => {
       item.classList.remove("dark-elements");
       item.classList.remove("dark-text");
@@ -236,6 +238,7 @@ toggleMode.addEventListener("click", () => {
     });
     body.classList.add("dark-mode");
     select.classList.add("dark-mode");
+    subRegionSelect.classList.add("dark-mode");
     card.forEach((item) => {
       item.classList.add("dark-elements");
       item.classList.add("dark-text");
